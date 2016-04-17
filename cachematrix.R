@@ -1,15 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
+## the functions below are for creating the inverse of a matrix that i shall create 
+## and for giving messages whenever an action(in this case the inverse of the matrix) has been repeated.
 
-## Write a short comment describing this function
+## below i create a special matrix object that can cache its own inverse including confirmation whether an inverse had been done before.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+inv <- NULL
+ set <- function(y) {
+ x <<- y
+ inv <<- NULL
+}
+get <- function() x
+setInverse <- function(inverse) inv <<- inverse
+getInverse <- function() inv
+list(set = set,
+get = get,
+setInverse = setInverse,
+getInverse = getInverse)
 }
 
 
-## Write a short comment describing this function
-
+## the function below gets the inverse of the matrix created in the function above. It checks whether the inverse of the matrix has already
+##been done and if it has it should return the inverse
+##otherwise it should return the inverse of the matrix
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(x, ...) {
+        inv <- x$getInverse()
+        if (!is.null(inv)) {
+                return(inv)
+        }
+	  else mat <- x$get()
+        inv <- solve(mat, ...)
+        x$setInverse(inv)
+        inv
+}
 }
